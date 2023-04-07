@@ -5,3 +5,5 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+cart1 = Cart.create(user: 'user_1', deleted: false)
+cart2 = Cart.create(user: 'user_1', deleted: true)
