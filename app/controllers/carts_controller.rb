@@ -1,7 +1,17 @@
+# frozen_string_literal: true
+
+# Carts Controller
 class CartsController < ApplicationController
   def index
     @carts = Cart.all
     render json: @carts
+  end
+
+  def summary
+    @cart = GetCartSummary.call(
+      cart_id: params[:id]
+    )
+    render json: @cart
   end
 
   def show
