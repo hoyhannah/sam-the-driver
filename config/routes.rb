@@ -7,5 +7,8 @@ Rails.application.routes.draw do
       get :summary, to: 'carts#summary'
     end
   end
+  post '/login', to: 'sessions#create'
+  resources :users, only: [:create]
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

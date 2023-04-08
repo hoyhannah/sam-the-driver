@@ -2,6 +2,8 @@
 
 # Carts Controller
 class CartsController < ApplicationController
+  include Authenticable
+
   def index
     @carts = Cart.all
     render json: @carts
@@ -9,7 +11,8 @@ class CartsController < ApplicationController
 
   def summary
     @cart = GetCartSummary.call(
-      cart_id: params[:id]
+      cart_id: params[:id],
+      current_user: @current_user
     )
     render json: @cart
   end

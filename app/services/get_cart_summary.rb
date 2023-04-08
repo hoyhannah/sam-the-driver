@@ -9,6 +9,8 @@ class GetCartSummary < ApplicationService
   end
 
   def call
+    validate_params
+
     cart_summary = {
       cart_items: map_product_info,
       total: total
@@ -22,8 +24,13 @@ class GetCartSummary < ApplicationService
     cart_summary
   end
 
+  def validate_params
+    cart = Cart.find_by(id: cart_id, user_id: current_user)
+    raise ActiveRecord::RecordNotFound.new('Cart not found for current user') if cart.nil?
+  end
+
   def cart_items
-    @cart_items ||= CartItem.where(cart_id: @params[:cart_id])
+    @cart_items ||= CartItem.where(cart_id: cart_id)
   end
 
   def discount_rate
@@ -62,5 +69,13 @@ class GetCartSummary < ApplicationService
 
   def products
     @products ||= JSON.parse(File.read('./products.json'))
+  end
+
+  def current_user
+    @current_user = params[:current_user]
+  end
+
+  def cart_id
+    @cart_id = params[:cart_id]
   end
 end
