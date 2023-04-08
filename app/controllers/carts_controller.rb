@@ -21,8 +21,8 @@ class CartsController < ApplicationController
 
   def create
     @cart = Cart.create(
-      user: params[:user],
-      deleted: false
+      user_id: params[:user_id],
+      active: true
     )
     render json: @cart
   end
@@ -30,8 +30,8 @@ class CartsController < ApplicationController
   def update
     @cart = Cart.find(params[:id])
     @cart.update(
-      user: params[:user],
-      deleted: params[:deleted]
+      user_id: params[:user_id],
+      active: params[:active]
     )
     render json: @cart
   end
