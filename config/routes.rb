@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :carts, only: %i[show index create update destroy] do
     member do
       get :summary, to: 'carts#summary'
+      get :current, to: 'carts/current'
     end
   end
   post '/login', to: 'sessions#create'

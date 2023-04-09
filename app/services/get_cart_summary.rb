@@ -25,7 +25,7 @@ class GetCartSummary < ApplicationService
   end
 
   def validate_params
-    cart = Cart.find_by(id: cart_id, user_id: current_user)
+    cart = Cart.find_by(id: cart_id, user_id: current_user.id)
     raise ActiveRecord::RecordNotFound.new('Cart not found for current user') if cart.nil?
   end
 

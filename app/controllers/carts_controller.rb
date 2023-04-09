@@ -17,6 +17,13 @@ class CartsController < ApplicationController
     render json: @cart
   end
 
+  def current
+    @cart = GetCartCurrent.call(
+      current_user: @current_user
+    )
+    render json: @cart
+  end
+
   def show
     @cart = Cart.find(params[:id])
     render json: @cart
