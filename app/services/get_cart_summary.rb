@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 # Service for Get Cart Summary
+
+class RecordNotFound < StandardError; end
+class IOError < StandardError; end
 class GetCartSummary < ApplicationService
   attr_reader :params
 
@@ -10,7 +13,7 @@ class GetCartSummary < ApplicationService
 
   def call
     validate_params
-
+    
     cart_summary = {
       cart_items: map_product_info,
       total: total
@@ -25,8 +28,13 @@ class GetCartSummary < ApplicationService
   end
 
   def validate_params
-    cart = Cart.find_by(id: cart_id, user_id: current_user.id)
-    raise ActiveRecord::RecordNotFound.new('Cart not found for current user') if cart.nil?
+    cart = Cart.find_by(
+      id: cart_id,
+      user_id: current_user.id,
+      active: true
+    )
+
+    raise RecordNotFound, 'Cart not found for current user' if cart.nil?
   end
 
   def cart_items
@@ -58,7 +66,10 @@ class GetCartSummary < ApplicationService
 
   def map_product_info
     @map_product_info ||= cart_items.map do |item|
-      product = products.find { |p| p['uuid'] == item['item_id'] }
+      product = products.find { |p| p['id'] == item['item_id'] }
+
+      raise RecordNotFound, "Item #{item['item_id']} is not found." if product.nil?
+
       {
         name: product['name'],
         price: product['price'],
@@ -68,7 +79,7 @@ class GetCartSummary < ApplicationService
   end
 
   def products
-    @products ||= JSON.parse(File.read('./products.json'))
+    @products ||= Product.all
   end
 
   def current_user
