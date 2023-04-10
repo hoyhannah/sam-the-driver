@@ -9,7 +9,13 @@ class AddItemsToCart < ApplicationService
   end
 
   def call
-    add_to_cart
+    if cart_item
+      update_cart_item
+
+      cart_item
+    else
+      add_to_cart
+    end
   end
 
   def add_to_cart
@@ -22,6 +28,14 @@ class AddItemsToCart < ApplicationService
 
   def cart
     @cart = Cart.find_by(user_id: current_user.id, active: true)
+  end
+
+  def update_cart_item
+    cart_item.update(quantity: quantity.to_i + cart_item.quantity.to_i)
+  end
+
+  def cart_item
+    @cart_item = CartItem.find_by(cart_id: cart.id, item_id: item_id)
   end
 
   def current_user
