@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def index
-    @products = GetProducts.call
+    @products = Product.all
     render json: @products
   end
 end
