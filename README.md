@@ -2,7 +2,7 @@
 
 * Ruby version
 
-    ruby 2.6.8p205
+    ruby 3.0.0
 
 * System dependencies
 
