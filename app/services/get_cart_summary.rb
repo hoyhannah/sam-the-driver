@@ -13,7 +13,7 @@ class GetCartSummary < ApplicationService
 
   def call
     validate_params
-    
+
     cart_summary = {
       cart_items: map_product_info,
       total: total
@@ -38,19 +38,19 @@ class GetCartSummary < ApplicationService
   end
 
   def cart_items
-    @cart_items ||= CartItem.where(cart_id: cart_id)
+    @cart_items = CartItem.where(cart_id: cart_id)
   end
 
   def discount_rate
-    @discount_rate ||= DiscountRates::RATES.find { |range, _rate| range.cover?(total) }&.last || 0
+    @discount_rate = DiscountRates::RATES.find { |range, _rate| range.cover?(total) }&.last || 0
   end
 
   def discounted_total
-    @discounted_total ||= (total * (1 - discount_rate)).round(2)
+    @discounted_total = (total * (1 - discount_rate)).round(2)
   end
 
   def discount
-    @discount ||= {
+    @discount = {
       rate: discount_rate,
       total_before_discount: total
     }
@@ -66,20 +66,20 @@ class GetCartSummary < ApplicationService
 
   def map_product_info
     @map_product_info ||= cart_items.map do |item|
-      product = products.find { |p| p['id'] == item['item_id'] }
+      product = find_product(item['item_id'])
 
       raise RecordNotFound, "Item #{item['item_id']} is not found." if product.nil?
 
       {
-        name: product['name'],
-        price: product['price'],
+        name: product.name,
+        price: product.price,
         quantity: item['quantity']
       }
     end
   end
 
-  def products
-    @products ||= Product.all
+  def find_product(id)
+    Product.find_by(id: id)
   end
 
   def current_user
@@ -87,6 +87,6 @@ class GetCartSummary < ApplicationService
   end
 
   def cart_id
-    @cart_id = params[:cart_id]
+    @cart_id ||= params[:cart_id]
   end
 end
