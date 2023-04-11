@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-# Service for Get Cart Summary
-
 class RecordNotFound < StandardError; end
-class IOError < StandardError; end
+
+# Service for Get Cart Summary
 class GetCartSummary < ApplicationService
   attr_reader :params
 
