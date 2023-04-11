@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+class RecordNotFound < StandardError; end
+
 # Service for Add Items to Cart
 class AddItemsToCart < ApplicationService
   attr_reader :params
@@ -9,6 +11,8 @@ class AddItemsToCart < ApplicationService
   end
 
   def call
+    raise RecordNotFound, 'Cart not found for current user' unless cart
+
     if cart_item
       update_cart_item
 
@@ -19,6 +23,8 @@ class AddItemsToCart < ApplicationService
   end
 
   def add_to_cart
+    raise RecordNotFound, 'Product not exisiting' unless product
+
     @add_to_cart = CartItem.create(
       cart_id: cart.id,
       item_id: item_id,
@@ -27,7 +33,11 @@ class AddItemsToCart < ApplicationService
   end
 
   def cart
-    @cart = Cart.find_by(user_id: current_user.id, active: true)
+    @cart ||= Cart.find_by(user_id: current_user.id, active: true)
+  end
+
+  def product
+    @product ||= Product.find_by(id: item_id)
   end
 
   def update_cart_item
