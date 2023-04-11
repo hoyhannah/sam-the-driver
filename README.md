@@ -7,10 +7,10 @@
     Bundler version: 2.4.10 
 
 * Installation
-    1. Clone the repository: git clone git@github.com:hoyhannah/sam-the-driver.git
-    2. Install dependencies: bundle install
-    3. Setup the database: rails db:setup
-    4. Start the server: rails server
+ 1. Clone the repository: git clone git@github.com:hoyhannah/sam-the-driver.git
+ 2. Install dependencies: bundle install
+ 3. Setup the database: rails db:setup
+ 4. Start the server: rails server
     
 * Console,
 
@@ -18,26 +18,26 @@
 
 * Application Abilities
 
-  1. Load a list of products from a file.
-        `rake task to initialize products: initialize.rake`
-  2. List product details to the user.
-        `GET/ products`
-  3. Add products to a Shopping Cart.
-        `POST/ cart_items`
-  4. Apply promotional discounts.
-        `GET/ carts#summary`
-  5. Calculate and display the total cost.
-        `GET/ carts#summary`
+ 1. Load a list of products from a file.
+       `rake task to initialize products: initialize.rake`
+ 2. List product details to the user.
+       `GET/ products`
+ 3. Add products to a Shopping Cart.
+       `POST/ cart_items`
+ 4. Apply promotional discounts.
+       `GET/ carts#summary`
+ 5. Calculate and display the total cost.
+       `GET/ carts#summary`
 
 * Usage 
      
-  1. Run rake task to initialize the products `rake products:initialize`
-  2. Register using `POST/ users`
-  3. Login using `POST/ login`. Take note of the generated jwt token.
-  4. Run `GET/ carts#current` with authorization using the token generated from previous item. This endpoint will retrieve your active cart details. If it does not exist, it will create a new one.
-  5. To load the product list, run `GET/ products`.
-  6. To add items to the cart, run `POST/ cart_items` with parameters for the item_id (can be found on item 4) and the quantity you want.
-  7. To see the summary and total of your cart, run `POST/ carts#summary`. It will display all the items in your cart including its name, price and quantity.
+ 1. Run rake task to initialize the products `rake products:initialize`
+ 2. Register using `POST/ users`
+ 3. Login using `POST/ login`. Take note of the generated jwt token.
+ 4. Run `GET/ carts#current` with authorization using the token generated from previous item. This endpoint will retrieve your active cart details. If it does not exist, it will create a new one.
+ 5. To load the product list, run `GET/ products`.
+ 6. To add items to the cart, run `POST/ cart_items` with parameters for the item_id (can be found on item 4) and the quantity you want.
+ 7. To see the summary and total of your cart, run `POST/ carts#summary`. It will display all the items in your cart including its name, price and quantity.
     It will also display the total amount to pay. If you were eligible for a discount, an additional attribute will be displayed containing the discount rate that has been applied and the total amount before the discount.
     
    Note: Recommend to use postman for ready to use samples. Please see Postman Instruction
@@ -52,9 +52,9 @@
  
 * Running the Tests
 
-    1. Run `gem install rspec` if rspec is not yet installed.
-    2. To run specific tests, run `bundle exec rspec <spec file path>`
-    3. To run all tests, run `bundle exec rspec`
+ 1. Run `gem install rspec` if rspec is not yet installed.
+ 2. To run specific tests, run `bundle exec rspec <spec file path>`
+ 3. To run all tests, run `bundle exec rspec`
     
 * Author
     
