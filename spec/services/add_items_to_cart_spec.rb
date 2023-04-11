@@ -46,7 +46,7 @@ describe AddItemsToCart do
       let(:params) { { current_user: user, item_id: 'some_id', quantity: 1 } }
       let!(:cart) { FactoryBot.create(:cart_entity, user_id: user.id, active: true) }
       it 'raises a RecordNotFound error' do
-        expect { service.call }.to raise_error(RecordNotFound, 'Product not exisiting')
+        expect { service.call }.to raise_error(RecordNotFound, 'Product does not exist')
       end
     end
   end

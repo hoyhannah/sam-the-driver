@@ -23,7 +23,7 @@ class AddItemsToCart < ApplicationService
   end
 
   def add_to_cart
-    raise RecordNotFound, 'Product not exisiting' unless product
+    raise RecordNotFound, 'Product does not exist' unless product
 
     @add_to_cart = CartItem.create(
       cart_id: cart.id,
